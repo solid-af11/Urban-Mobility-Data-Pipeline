@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  dw_postgres:
+    image: postgres:15
+    container_name: dw_postgres
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=password123
+      - POSTGRES_DB=nyc_warehouse
+    ports:
+      - "5432:5432"
+
+  airflow:
+    image: apache/airflow:2.7.1-python3.11
+    container_name: airflow_runner
+    depends_on:
+      - dw_postgres
+    environment:
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://admin:password123@dw_postgres/nyc_warehouse
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+    volumes:
+      - ./dags:/opt/airflow/dags
+    ports:
+      - "8080:8080"
+    command: standalone
