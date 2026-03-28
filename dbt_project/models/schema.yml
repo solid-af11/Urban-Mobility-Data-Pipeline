@@ -1,0 +1,18 @@
+version: 2
+
+sources:
+  - name: nyc_raw
+    database: nyc_warehouse
+    schema: public
+    tables:
+      - name: raw_nyc_trips
+
+models:
+  - name: stg_trips
+    columns:
+      - name: distance
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              arguments:
+                expression: ">= 0"

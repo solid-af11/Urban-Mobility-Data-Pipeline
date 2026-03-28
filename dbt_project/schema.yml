@@ -1,9 +1,0 @@
-version: 2
-models:
-  - name: stg_trips
-    columns:
-      - name: distance
-        tests:
-          - not_null
-          - dbt_utils.expression_is_true:
-              expression: ">= 0"
