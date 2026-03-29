@@ -1,0 +1,12 @@
+urban_mobility:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: dw_postgres
+      port: 5432
+      user: admin
+      password: password123
+      dbname: nyc_warehouse
+      schema: public
+      threads: 4
